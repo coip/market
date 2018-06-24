@@ -2,8 +2,9 @@ package vendor
 
 //	Store provides an object to contain offered Items and Deals
 type Store struct {
-	Items []Product `json:"products"`
-	Deals []Special
+	Items   []Product `json:"products"`
+	Deals   []Special
+	Baskets map[string]Basket
 }
 
 //	A Basket(n-many, n=customer) maps [ItemCodes]->{# in basket}.
@@ -32,4 +33,9 @@ type Discount struct {
 	Relative  bool `json:"rel"`
 	Amount    int  `json:"amt"`
 	Inclusive bool `json:"all,omitempty"`
+}
+
+type Order struct {
+	BasketName string `json:"basket,omitempty"`
+	ItemCode   string `json:"code"`
 }

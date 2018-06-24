@@ -24,10 +24,12 @@ func Init(offeringslink, specialslink string) {
 	prices = make(map[string]int32)
 
 	products = make(map[string]Product)
+
 	deals = make(map[string]Special)
 
 	store.Items = getProducts(offeringslink)
 	store.Deals = getSpecials(specialslink)
+	store.Baskets = make(map[string]Basket)
 
 }
 
@@ -84,4 +86,25 @@ func nameLookup(productId string) string {
 
 func priceLookup(productId string) int32 {
 	return prices[productId]
+}
+
+func peek(b Basket) int32 {
+	var sum int32 = 0
+	log.Println("Iterating over Basket...")
+	for i := range b {
+		log.Printf("[%d][%s] = ¢[%d/ea]; involves Deals[%v]", b[i], i, prices[i], deals[i].Label)
+		sum += b[i] * prices[i]
+		//for each item b[i]{0->n}, assemble charge and println
+		for k := int32(0); k < b[i]; k++ {
+			chrg := struct {
+				p Product
+				d Discount
+			}{
+				products[i],
+				deals[i].Discount,
+			}
+			log.Printf("Line item: %+v", chrg)
+		}
+	}
+	return sum
 }

@@ -28,8 +28,12 @@ func main() {
 
 	//vendor-context list requests.
 	http.HandleFunc("/api/vendors/getProducts", vendor.ListProducts)
+	http.HandleFunc("/api/vendors/getBaskets", vendor.ListBaskets)
 	http.HandleFunc("/api/vendors/getSpecials", vendor.ListSpecials)
 	http.HandleFunc("/api/vendors/getVendorInfo", vendor.ListVendorInfo)
+
+	//customer action endpoints
+	http.HandleFunc("/api/customer/addItem", vendor.AddItem)
 
 	log.Println("Starting server...")
 
