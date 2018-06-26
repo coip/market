@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"market/template"
 	"net/http"
 )
 
@@ -42,6 +43,27 @@ func GetPrice(w http.ResponseWriter, r *http.Request) {
 			fmt.Fprintf(w, "specify `code` in querystring")
 		}
 	}
+}
+
+func GetCustomers(w http.ResponseWriter, r *http.Request) {
+
+	var customerList = store.getCustomers()
+
+	// Had better use buffer pool. Hero exports `GetBuffer` and `PutBuffer` for this.
+	//
+	// For convenience, hero also supports `io.Writer`. For example, you can also define
+	// the function to `func UserList(userList []string, w io.Writer) (int, error)`,
+	// and then:
+	//
+	//   template.UserList(userList, w)
+	//
+	template.CustomerList(customerList, w)
+
+	//fmt.Fprintf(w, "%v", store.getCustomers())
+}
+
+func GetCustomer(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "%+v", store.Baskets[r.FormValue("id")])
 }
 
 func ListVendorInfo(w http.ResponseWriter, r *http.Request) {

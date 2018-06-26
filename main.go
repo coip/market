@@ -32,6 +32,9 @@ func main() {
 	http.HandleFunc("/api/vendors/getSpecials", vendor.ListSpecials)
 	http.HandleFunc("/api/vendors/getVendorInfo", vendor.ListVendorInfo)
 
+	http.HandleFunc("/getCustomers", vendor.GetCustomers)
+	http.HandleFunc("/getCustomer", vendor.GetCustomer)
+
 	//customer action endpoints
 	http.HandleFunc("/api/customer/addItem", vendor.AddItem)
 

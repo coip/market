@@ -18,7 +18,7 @@ var products map[string]Product
 
 var deals map[string]Special
 
-func Init(offeringslink, specialslink string) {
+func Init(offeringslink, specialslink string) Store {
 
 	names = make(map[string]string)
 	prices = make(map[string]int32)
@@ -31,6 +31,7 @@ func Init(offeringslink, specialslink string) {
 	store.Deals = getSpecials(specialslink)
 	store.Baskets = make(map[string]Basket)
 
+	return store
 }
 
 func getProducts(link string) []Product {
@@ -75,6 +76,17 @@ func getSpecials(link string) (specials []Special) {
 	return
 }
 
+func (store Store) getCustomers() (keys []string) {
+
+	keys = make([]string, len(store.Baskets))
+
+	i := 0
+	for k := range store.Baskets {
+		keys[i] = k
+		i++
+	}
+	return
+}
 func stripCurrencyChars(in string) string {
 	tmp := strings.Replace(in, "$", "", -1)
 	return strings.Replace(tmp, ".", "", -1)

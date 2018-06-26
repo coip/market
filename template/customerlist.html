@@ -1,0 +1,11 @@
+<%: func CustomerList(customerList []string, w io.Writer) (int, error)%>
+
+<%~ "index.html" %>
+
+<%@ body { %>
+    <% for _, customer := range customerList { %>
+        <ul>
+            <%+ "customer.html" %>
+        </ul>
+    <% } %>
+<% } %>

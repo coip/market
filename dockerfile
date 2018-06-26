@@ -4,11 +4,18 @@ FROM golang:alpine as builder
 # scaffold fs tree
 RUN mkdir -p /go/src/market
 WORKDIR /go/src/market
-RUN mkdir vendor
+RUN mkdir vendor template
 
+RUN apk add --no-cache git
+RUN go get github.com/shiyanhui/hero/hero
+RUN go get github.com/shiyanhui/hero/
+RUN go get golang.org/x/tools/cmd/goimports
 #copy the source files
 COPY main.go /go/src/market
 COPY vendor/* vendor/
+COPY template/* template/
+
+RUN hero -source="template"
 
 #disable crosscompiling
 ENV CGO_ENABLED=0
